@@ -1,5 +1,5 @@
-from sqlalchemy.orm import Session
 from sqlalchemy import or_, select
+from sqlalchemy.orm import Session
 
 from app.core.exception import NotFoundException
 from app.model.product import Product

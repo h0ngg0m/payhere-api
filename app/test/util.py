@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 
 def get_access_token(client: TestClient) -> Dict[str, str]:
     data = {"tel": "01099998888", "password": "1234"}
-    rr = client.post(
+    client.post(
         "api/v1/users",
         json=data,
     )

@@ -1,9 +1,9 @@
+import pytest
 from sqlalchemy.orm import Session
 
 from app.core.exception import NotFoundException
 from app.crud import crud_product
 from app.schema.product import ProductCreate, ProductUpdate
-import pytest
 
 
 def test_create_success(db: Session):

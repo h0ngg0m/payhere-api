@@ -1,5 +1,3 @@
-from typing import Optional
-
 from app.schema.base import Schema
 
 

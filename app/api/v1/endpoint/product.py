@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Query
 from starlette.status import HTTP_204_NO_CONTENT
 
-from app.api.depends import SessionDepends, CurrentUser
+from app.api.depends import CurrentUser, SessionDepends
 from app.crud import crud_product
 from app.schema.base import CommonResponse, ListResponse
-from app.schema.product import ProductResponse, ProductCreate, ProductUpdate
+from app.schema.product import ProductCreate, ProductResponse, ProductUpdate
 
 router = APIRouter()
 

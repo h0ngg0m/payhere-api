@@ -2,8 +2,7 @@ from sqlalchemy.orm import Mapped
 
 from app.core.db.orm import Base, mapped_int_pk
 from app.core.util import get_chosung
-from app.schema.product import ProductCreate, Category, ProductSize, ProductUpdate
-from app.schema.user import UserCreate
+from app.schema.product import Category, ProductCreate, ProductSize, ProductUpdate
 
 
 class Product(Base):

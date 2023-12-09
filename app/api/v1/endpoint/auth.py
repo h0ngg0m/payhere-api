@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from starlette.status import HTTP_204_NO_CONTENT
 
-from app.api.depends import SessionDepends, CurrentUser
+from app.api.depends import CurrentUser, SessionDepends
 from app.core import security
 from app.core.config import settings
 from app.core.exception import UnauthorizedException
@@ -14,11 +14,6 @@ from app.schema.base import CommonResponse
 from app.schema.token import Token
 
 router = APIRouter()
-
-
-@router.get("")
-def read_users():
-    return settings
 
 
 @router.post("/login", response_model=CommonResponse[Token])

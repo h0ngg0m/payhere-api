@@ -1,10 +1,10 @@
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 from app.core.exception import NotFoundException
 from app.crud import crud_product
 from app.schema.product import ProductCreate
-import pytest
 
 
 def test_create_products_success(client: TestClient, access_token: dict):
