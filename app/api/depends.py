@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Generator
 
 from fastapi import Depends
 from jose import jwt
@@ -21,7 +21,7 @@ def get_token(request: Request) -> str:
     return authorization.split(" ")[1]
 
 
-def get_db():
+def get_db() -> Generator:
     db = SessionLocal()
     try:
         yield db

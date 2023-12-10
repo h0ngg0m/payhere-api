@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Generator
 
 import pytest
 from fastapi.testclient import TestClient
@@ -15,7 +15,7 @@ SessionTesting = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 @pytest.fixture(scope="session")
-def db():
+def db() -> Generator:
     connection = engine.connect()
     transaction = connection.begin()
     session = SessionTesting(bind=connection)
@@ -26,7 +26,7 @@ def db():
 
 
 @pytest.fixture(scope="module")
-def client(db: SessionTesting):
+def client(db: SessionTesting) -> Generator:
     app.dependency_overrides[get_db] = lambda: db
     with TestClient(app) as client:
         yield client

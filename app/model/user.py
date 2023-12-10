@@ -13,11 +13,11 @@ class User(Base):
     logout_flag: Mapped[bool]
 
     @staticmethod
-    def new(data: UserCreate):
+    def new(data: UserCreate) -> "User":
         return User(**data.dict(exclude={"id"}))
 
-    def login(self):
+    def login(self) -> None:
         self.logout_flag = False
 
-    def logout(self):
+    def logout(self) -> None:
         self.logout_flag = True

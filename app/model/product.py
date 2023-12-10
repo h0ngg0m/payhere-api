@@ -20,13 +20,13 @@ class Product(Base):
     size: Mapped[ProductSize]
 
     @staticmethod
-    def new(data: ProductCreate):
+    def new(data: ProductCreate) -> "Product":
         return Product(
             **data.dict(exclude={"id", "name_chosung"}),
             name_chosung=get_chosung(data.name)
         )
 
-    def update(self, data: ProductUpdate):
+    def update(self, data: ProductUpdate) -> "Product":
         for key, value in data.dict(exclude={"id", "name_chosung"}).items():
             setattr(self, key, value)
         self.name_chosung = get_chosung(data.name)
