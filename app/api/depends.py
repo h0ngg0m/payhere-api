@@ -33,6 +33,7 @@ SessionDepends = Annotated[Session, Depends(get_db)]
 TokenDepends = Annotated[str, Depends(get_token)]
 
 
+# 요청한 토큰을 디코딩하여 유저 정보를 가져온다.
 def get_current_user(session: SessionDepends, token: TokenDepends) -> User:
     try:
         payload = jwt.decode(

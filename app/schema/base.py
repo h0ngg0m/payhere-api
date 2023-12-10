@@ -1,7 +1,5 @@
-from datetime import datetime, timezone
 from typing import Generic, TypeVar
 
-from orjson import loads
 from pydantic import BaseModel
 
 
@@ -12,14 +10,8 @@ def camelize(s: str) -> str:
 
 class Schema(BaseModel):
     class Config:
-        alias_generator = camelize
-        allow_population_by_field_name = True
-        json_loads = loads
-        json_encoders = {
-            datetime: lambda v: v.astimezone(timezone.utc)
-            .isoformat(timespec="milliseconds")
-            .replace("+00:00", "Z"),
-        }
+        alias_generator = camelize  # camelize 함수로 별칭을 만든다.
+        allow_population_by_field_name = True  # alias로 지정한 이름으로 필드를 접근할 수 있게 해준다.
 
 
 T = TypeVar("T")
