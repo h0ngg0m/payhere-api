@@ -14,7 +14,7 @@ def create(*, db: Session, data: UserCreate) -> UserResponse:
     same_tel_user: User = get_by_tel(db=db, tel=data.tel)
 
     if same_tel_user:
-        raise ConflictException(f"'{data.tel}'는 이미 존재하는 휴대폰 번호입니다.")
+        raise ConflictException(f"'{data.tel}'는 이미 사용 중인 휴대폰 번호입니다.")
 
     user: User = User.new(data)
     user.password = get_password_hash(user.password)
