@@ -1,5 +1,4 @@
 from datetime import timedelta
-from typing import Any
 
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
@@ -17,10 +16,7 @@ router = APIRouter()
 
 
 @router.post("/login", response_model=CommonResponse[Token])
-def login(
-    db: SessionDepends,
-    form_data: OAuth2PasswordRequestForm = Depends(),
-) -> Any:
+def login(db: SessionDepends, form_data: OAuth2PasswordRequestForm = Depends()):
     user = crud_user.authenticate(
         db=db, tel=form_data.username, password=form_data.password
     )
