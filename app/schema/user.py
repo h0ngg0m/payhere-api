@@ -21,3 +21,8 @@ class UserResponse(Schema):
 
     class Config:
         orm_mode = True
+
+
+class UserLogin(Schema):
+    tel: str
+    password: str

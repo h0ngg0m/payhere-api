@@ -1,7 +1,6 @@
 from datetime import timedelta
 
-from fastapi import APIRouter, Depends
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import APIRouter
 from starlette.status import HTTP_204_NO_CONTENT
 
 from app.api.depends import CurrentUser, SessionDepends
@@ -11,15 +10,14 @@ from app.core.exception import UnauthorizedException
 from app.crud import crud_user
 from app.schema.base import CommonResponse
 from app.schema.token import Token
+from app.schema.user import UserLogin
 
 router = APIRouter()
 
 
 @router.post("/login", response_model=CommonResponse[Token])
-def login(db: SessionDepends, form_data: OAuth2PasswordRequestForm = Depends()):
-    user = crud_user.authenticate(
-        db=db, tel=form_data.username, password=form_data.password
-    )
+def login(db: SessionDepends, data: UserLogin):
+    user = crud_user.authenticate(db=db, tel=data.tel, password=data.password)
     if not user:
         raise UnauthorizedException("잘못된 휴대폰 번호 또는 비밀번호입니다.")
 

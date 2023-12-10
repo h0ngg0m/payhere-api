@@ -10,7 +10,7 @@ def get_access_token(client: TestClient) -> Dict[str, str]:
         json=data,
     )
     response = client.post(
-        "api/v1/auth/login", data={"username": "01099998888", "password": "1234"}
+        "api/v1/auth/login", json={"tel": "01099998888", "password": "1234"}
     )
     access_token = response.json()["data"]["access_token"]
     headers = {"Authorization": f"Bearer {access_token}"}

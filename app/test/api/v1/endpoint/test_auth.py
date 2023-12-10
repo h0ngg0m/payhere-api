@@ -12,7 +12,7 @@ def test_login_success(client: TestClient, db: Session):
 
     # when
     response = client.post(
-        "api/v1/auth/login", data={"username": "01012340987", "password": "1234"}
+        "api/v1/auth/login", json={"tel": "01012340987", "password": "1234"}
     )
 
     # then
