@@ -20,8 +20,7 @@ def create(*, db: Session, data: ProductCreate) -> ProductResponse:
 def read_by_id(*, db: Session, id_: int) -> ProductResponse:
     product: Product | None = db.get(Product, id_)
 
-    if not product:
-        raise NotFoundException("존재하지 않는 상품입니다.")
+    _raise_if_not_exists(product)
 
     return ProductResponse.from_orm(product)
 
@@ -59,8 +58,7 @@ def read_products(
 def update(*, db: Session, id_: int, data: ProductUpdate) -> ProductResponse:
     product: Product | None = db.get(Product, id_)
 
-    if not product:
-        raise NotFoundException("존재하지 않는 상품입니다.")
+    _raise_if_not_exists(product)
 
     product.update(data)
 
@@ -74,8 +72,12 @@ def update(*, db: Session, id_: int, data: ProductUpdate) -> ProductResponse:
 def delete(*, db: Session, id_: int) -> None:
     product: Product | None = db.get(Product, id_)
 
-    if not product:
-        raise NotFoundException("존재하지 않는 상품입니다.")
+    _raise_if_not_exists(product)
 
     db.delete(product)
     db.commit()
+
+
+def _raise_if_not_exists(product: Product | None) -> None:
+    if not product:
+        raise NotFoundException("존재하지 않는 상품입니다.")
