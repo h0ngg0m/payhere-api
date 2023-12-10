@@ -17,7 +17,7 @@ def test_login_success(client: TestClient, db: Session):
 
     # then
     assert response.status_code == 200
-    assert response.json()["data"]["access_token"] is not None
+    assert response.json()["data"]["accessToken"] is not None
 
 
 def test_logout_success(client: TestClient, access_token: dict):
