@@ -25,15 +25,16 @@ def test_create_products_success(client: TestClient, access_token: dict):
 
     # then
     assert response.status_code == 200
-    assert response.json()["data"]["category"] == "FOOD"
-    assert response.json()["data"]["price"] == 1000
-    assert response.json()["data"]["cost"] == 500
-    assert response.json()["data"]["name"] == "test"
-    assert response.json()["data"]["description"] == "test"
-    assert response.json()["data"]["barcode"] == "1234567890123"
-    assert response.json()["data"]["expiryDate"] == "2023-03-25 13:45:30"
-    assert response.json()["data"]["size"] == "SMALL"
-    assert response.json()["data"]["id"] is not None
+    response_data = response.json()["data"]
+    assert response_data["category"] == "FOOD"
+    assert response_data["price"] == 1000
+    assert response_data["cost"] == 500
+    assert response_data["name"] == "test"
+    assert response_data["description"] == "test"
+    assert response_data["barcode"] == "1234567890123"
+    assert response_data["expiryDate"] == "2023-03-25 13:45:30"
+    assert response_data["size"] == "SMALL"
+    assert response_data["id"] is not None
 
 
 def test_read_product_by_id_success(
@@ -57,15 +58,16 @@ def test_read_product_by_id_success(
 
     # then
     assert response.status_code == 200
-    assert response.json()["data"]["category"] == "FOOD"
-    assert response.json()["data"]["price"] == 1000
-    assert response.json()["data"]["cost"] == 500
-    assert response.json()["data"]["name"] == "test"
-    assert response.json()["data"]["description"] == "test"
-    assert response.json()["data"]["barcode"] == "1234567890123"
-    assert response.json()["data"]["expiryDate"] == "2023-03-25 13:45:30"
-    assert response.json()["data"]["size"] == "SMALL"
-    assert response.json()["data"]["id"] is not None
+    response_data = response.json()["data"]
+    assert response_data["category"] == "FOOD"
+    assert response_data["price"] == 1000
+    assert response_data["cost"] == 500
+    assert response_data["name"] == "test"
+    assert response_data["description"] == "test"
+    assert response_data["barcode"] == "1234567890123"
+    assert response_data["expiryDate"] == "2023-03-25 13:45:30"
+    assert response_data["size"] == "SMALL"
+    assert response_data["id"] is not None
 
 
 def test_update_product_success(client: TestClient, access_token: dict, db: Session):
@@ -99,15 +101,16 @@ def test_update_product_success(client: TestClient, access_token: dict, db: Sess
 
     # then
     assert response.status_code == 200
-    assert response.json()["data"]["category"] == "CLOTH"
-    assert response.json()["data"]["price"] == 1500
-    assert response.json()["data"]["cost"] == 700
-    assert response.json()["data"]["name"] == "beast"
-    assert response.json()["data"]["description"] == "beast"
-    assert response.json()["data"]["barcode"] == "101010101"
-    assert response.json()["data"]["expiryDate"] == "2123-03-25 13:45:30"
-    assert response.json()["data"]["size"] == "LARGE"
-    assert response.json()["data"]["id"] is not None
+    response_data = response.json()["data"]
+    assert response_data["category"] == "CLOTH"
+    assert response_data["price"] == 1500
+    assert response_data["cost"] == 700
+    assert response_data["name"] == "beast"
+    assert response_data["description"] == "beast"
+    assert response_data["barcode"] == "101010101"
+    assert response_data["expiryDate"] == "2123-03-25 13:45:30"
+    assert response_data["size"] == "LARGE"
+    assert response_data["id"] is not None
 
 
 def test_delete_product_success(client: TestClient, access_token: dict, db: Session):
