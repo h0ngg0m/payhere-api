@@ -14,13 +14,6 @@ from app.model.user import User
 from app.schema.token import TokenPayload
 
 
-def get_token(request: Request) -> str:
-    authorization = request.headers.get("Authorization")
-    if not authorization:
-        raise UnauthorizedException("권한이 없습니다.")
-    return authorization.split(" ")[1]
-
-
 def get_db() -> Generator:
     db = SessionLocal()
     try:
@@ -30,12 +23,18 @@ def get_db() -> Generator:
 
 
 SessionDepends = Annotated[Session, Depends(get_db)]
-TokenDepends = Annotated[str, Depends(get_token)]
 
 
 # 요청한 토큰을 디코딩하여 유저 정보를 가져온다.
-def get_current_user(session: SessionDepends, token: TokenDepends) -> User:
+def get_current_user(session: SessionDepends, request: Request) -> User:
     try:
+        authorization = request.headers.get("Authorization")
+
+        if not authorization or len(authorization.split(" ")) != 2:
+            raise UnauthorizedException("권한이 없습니다.")
+
+        token = authorization.split(" ")[1]
+
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]
         )
