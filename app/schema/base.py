@@ -1,6 +1,7 @@
 from typing import Generic, TypeVar
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from pydantic.generics import GenericModel
 
 
 def camelize(s: str) -> str:
@@ -17,17 +18,17 @@ class Schema(BaseModel):
 T = TypeVar("T")
 
 
-class ListResponse(Schema, Generic[T]):
-    next_cursor: int | None
-    page_size: int | None
-    items: list[T]
+class ListResponse(Schema, GenericModel, Generic[T]):
+    next_cursor: int | None = Field(None, description="다음 페이지 커서")
+    page_size: int | None = Field(None, description="페이지당 아이템 개수")
+    items: list[T] = Field(description="아이템 목록")
 
 
 class Meta(Schema):
-    code: int = 200
-    message: str = "oK"
+    code: int = Field(200, description="응답 코드")
+    message: str = Field("ok", description="응답 메세지")
 
 
-class CommonResponse(Schema, Generic[T]):
-    meta: Meta = Meta()
-    data: T = None
+class CommonResponse(Schema, GenericModel, Generic[T]):
+    meta: Meta = Field(Meta(), description="메타 정보")
+    data: T = Field(None, description="응답 데이터")

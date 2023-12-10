@@ -1,12 +1,12 @@
-from pydantic import validator
+from pydantic import Field, validator
 
 from app.core.exception import BadRequestException
 from app.schema.base import Schema
 
 
 class UserCreate(Schema):
-    tel: str
-    password: str
+    tel: str = Field(description="휴대폰 번호 (휴대폰 번호는 숫자로 된 11자리여야 합니다)")
+    password: str = Field(description="비밀번호")
 
     @validator("tel")
     def validate_tel(cls, tel: str) -> str:
@@ -16,13 +16,13 @@ class UserCreate(Schema):
 
 
 class UserResponse(Schema):
-    id: int
-    tel: str
+    id: int = Field(description="ID")
+    tel: str = Field(description="휴대폰 번호")
 
     class Config:
         orm_mode = True
 
 
 class UserLogin(Schema):
-    tel: str
-    password: str
+    tel: str = Field(description="휴대폰 번호 (휴대폰 번호는 숫자로 된 11자리여야 합니다)")
+    password: str = Field(description="비밀번호")

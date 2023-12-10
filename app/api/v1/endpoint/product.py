@@ -23,9 +23,9 @@ def read_product_by_id(db: SessionDepends, id_: int, current_user: CurrentUser):
 def read_products(
     db: SessionDepends,
     current_user: CurrentUser,
-    query: str | None = Query(None),
-    cursor: int | None = Query(None),
-    page_size: int | None = Query(default=10, alias="pageSize"),
+    query: str | None = Query(None, description="검색할 상품 이름, 초성"),
+    cursor: int | None = Query(None, description="페이지 커서"),
+    page_size: int | None = Query(10, description="페이지당 아이템 개수", alias="pageSize"),
 ):
     return CommonResponse(
         data=crud_product.read_products(
