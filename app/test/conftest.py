@@ -14,7 +14,7 @@ engine = create_engine(TEST_DATABASE_URL)
 SessionTesting = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def db() -> Generator:
     connection = engine.connect()
     transaction = connection.begin()
@@ -25,13 +25,13 @@ def db() -> Generator:
     connection.close()
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def client(db: SessionTesting) -> Generator:
     app.dependency_overrides[get_db] = lambda: db  # 테스트 시 app의 get_db를 db로 오버라이드
     with TestClient(app) as client:
         yield client
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def access_token(client: TestClient) -> Dict[str, str]:
     return get_access_token(client)
