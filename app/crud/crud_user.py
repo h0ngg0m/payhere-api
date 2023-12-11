@@ -35,12 +35,10 @@ def authenticate(*, db: Session, tel: str, password: str) -> User | None:
         return None
 
     user.login()
-    db.flush()
     db.commit()
     return user
 
 
 def logout(*, db: Session, user: User) -> None:
     user.logout()
-    db.flush()
     db.commit()

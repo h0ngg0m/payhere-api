@@ -61,7 +61,6 @@ def update(*, db: Session, id_: int, data: ProductUpdate) -> ProductResponse:
 
     product.update(data)
 
-    db.flush()
     db.commit()
     db.refresh(product)
     return ProductResponse.from_orm(product)
