@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     MYSQL_HOST: str
     MYSQL_PORT: int
     MYSQL_DB_NAME: str
+    TEST_DATABASE_URL: str
 
     class Config:
         env_file = get_dotenv_paths()
