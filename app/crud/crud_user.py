@@ -29,7 +29,7 @@ def authenticate(*, db: Session, tel: str, password: str) -> User | None:
     user = get_by_tel(db=db, tel=tel)
     if not user:
         return None
-    if not verify_password(password, user.password):
+    if not verify_password(plain_password=password, hashed_password=user.password):
         return None
 
     user.login()
