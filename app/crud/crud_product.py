@@ -26,9 +26,9 @@ def read_by_id(*, db: Session, id_: int) -> ProductResponse:
 
 
 def read_products(
-    *, db: Session, query: str | None, cursor: int | None, page_size: int | None
+    *, db: Session, query: str | None, cursor: int, page_size: int
 ) -> ListResponse[ProductResponse]:
-    statement = select(Product).order_by(Product.id.desc())
+    statement = select(Product).filter(Product.id > cursor)
 
     if query:
         statement = statement.filter(
@@ -38,19 +38,19 @@ def read_products(
             )
         )
 
-    if cursor:
-        statement = statement.filter(Product.id <= cursor)
-
-    if page_size:
+    if page_size != -1:
         statement = statement.limit(page_size)
 
     products = [
         ProductResponse.from_orm(product) for product in db.scalars(statement).all()
     ]
+    next_cursor = (
+        products[-1].id if cursor >= 0 and products and page_size != -1 else None
+    )
 
     return ListResponse(
-        next_cursor=products[-1].id - 1 if cursor and products else None,
-        page_size=page_size if page_size else None,
+        next_cursor=next_cursor,
+        page_size=page_size,
         items=products,
     )
 

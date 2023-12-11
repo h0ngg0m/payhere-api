@@ -24,8 +24,10 @@ def read_products(
     db: SessionDepends,
     current_user: CurrentUser,
     query: str | None = Query(None, description="검색할 상품 이름, 초성"),
-    cursor: int | None = Query(None, description="페이지 커서"),
-    page_size: int | None = Query(10, description="페이지당 아이템 개수", alias="pageSize"),
+    cursor: int = Query(0, description="페이지 커서"),
+    page_size: int = Query(
+        -1, description="페이지당 아이템 개수, -1인 경우 모든 아이템 조회", alias="pageSize"
+    ),
 ):
     return CommonResponse(
         data=crud_product.read_products(

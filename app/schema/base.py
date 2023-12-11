@@ -20,7 +20,7 @@ T = TypeVar("T")
 
 class ListResponse(Schema, GenericModel, Generic[T]):
     next_cursor: int | None = Field(None, description="다음 페이지 커서")
-    page_size: int | None = Field(None, description="페이지당 아이템 개수")
+    page_size: int | None = Field(None, description="페이지당 아이템 개수, -1인 경우 모든 아이템 조회")
     items: list[T] = Field(description="아이템 목록")
 
 
