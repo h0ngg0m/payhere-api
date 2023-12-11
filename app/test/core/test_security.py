@@ -42,3 +42,18 @@ def test_vetify_password_success():
     # then
     assert result is True
     assert plain_password != hashed_password
+
+
+def test_return_false_when_verify_password_with_wrong_password():
+    # given
+    plain_password = "test"
+    hashed_password = get_password_hash(plain_password)
+    another_plain_password = "test2"
+
+    # when
+    result = verify_password(
+        plain_password=another_plain_password, hashed_password=hashed_password
+    )
+
+    # then
+    assert result is False
