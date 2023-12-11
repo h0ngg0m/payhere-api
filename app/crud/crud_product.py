@@ -13,7 +13,6 @@ def create(*, db: Session, data: ProductCreate) -> ProductResponse:
     db.add(product)
     db.commit()
     db.refresh(product)
-
     return ProductResponse.from_orm(product)
 
 
@@ -65,7 +64,6 @@ def update(*, db: Session, id_: int, data: ProductUpdate) -> ProductResponse:
     db.flush()
     db.commit()
     db.refresh(product)
-
     return ProductResponse.from_orm(product)
 
 
